@@ -1,0 +1,12 @@
+*Minimum Requirements*
+    - Python 3.12.1
+    - PySide6
+    - PyQt6
+
+new user
+first name
+last name
+user name
+password
+confirm/password
+address
