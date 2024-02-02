@@ -75,6 +75,7 @@ class JobSetup(QTabWidget):
         form_layout.addWidget(l_title_name)
         form_layout.addWidget(title_name)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)
@@ -120,6 +121,7 @@ class JobSetup(QTabWidget):
         form_layout.addWidget(l_status_name)
         form_layout.addWidget(status_name)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)
@@ -165,6 +167,7 @@ class JobSetup(QTabWidget):
         form_layout.addWidget(l_grade_name)
         form_layout.addWidget(grade_name)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)
@@ -210,6 +213,7 @@ class JobSetup(QTabWidget):
         form_layout.addWidget(l_category_name)
         form_layout.addWidget(category_name)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)
@@ -261,6 +265,7 @@ class JobSetup(QTabWidget):
         form_layout.addWidget(l_sort_code)
         form_layout.addWidget(sort_code)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)
@@ -306,6 +311,7 @@ class JobSetup(QTabWidget):
         form_layout.addWidget(l_state_name)
         form_layout.addWidget(state_name)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)
@@ -361,6 +367,7 @@ class JobSetup(QTabWidget):
         form_layout.addWidget(l_sub_unit_name)
         form_layout.addWidget(sub_unit_name)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)

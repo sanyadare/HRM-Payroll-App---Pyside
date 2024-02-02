@@ -44,6 +44,22 @@ LIGHT_MODE_STYLESHEET = """
         border: 1px solid #45A049; /* Button border color */
         border-radius: 10px;
         padding: 5px 10px;
+        font-size: 14px;
+    }
+    
+    QIcon {
+        background-color: #FFFFFF;
+        
+    }
+    
+    QLineEdit {
+        border: 1px solid #000; /* Button border color */
+        border-radius: 10px;
+        padding: 5px;
+    }
+    
+    QLineEdit:focus {
+        border: 1px solid #45A049; /* Button border color */
     }
     
     QPushButton:hover {
@@ -58,6 +74,11 @@ LIGHT_MODE_STYLESHEET = """
     
     QLabel {
         color: #000
+    }
+    
+    QLabel#form_label {
+        # font-weight: bold;
+        color: red;
     }
 """
 

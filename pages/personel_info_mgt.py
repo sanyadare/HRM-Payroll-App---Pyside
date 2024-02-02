@@ -74,7 +74,7 @@ class Pim(QTabWidget):
         # 
         dialog = QDialog()
         dialog.setWindowTitle(f'Staff Details of {staff_name}')
-        dialog.resize(800, 600)  # Set the size of the dialog box
+        dialog.resize(800, 700)  # Set the size of the dialog box
         
         employee_page = Employee(staff_id=staff_id )
         t_layout = QHBoxLayout()
@@ -128,5 +128,5 @@ class Pim(QTabWidget):
         
         dialog.exec_()
 
-# Assuming Employee class is defined elsewhere
+
 

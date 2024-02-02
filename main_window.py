@@ -11,6 +11,7 @@ from pages.personel_info_mgt import Pim
 from pages.salary_setup import SalarySetup
 from pages.job_setup import JobSetup
 from pages.reports import Reports
+from pages.my_account import MyAccount
 from stylesheet import DARK_MODE_STYLESHEET, LIGHT_MODE_STYLESHEET
 from utils import convert_month, months, active_years
 
@@ -21,7 +22,9 @@ class MainWindow(QMainWindow):
         self.current_mode = 'light'
         self.setWindowTitle("Akyerit Payslip HRM")
         self.set_default_window_size()
+        self.resize(1200, 600)
         
+        self.switch_to_light_mode()
         self.init_ui()
         self.show()
         
@@ -56,7 +59,7 @@ class MainWindow(QMainWindow):
         appearance_menu.addAction('Default Mode', self.switch_to_default_mode)
         appearance_menu.addAction('Light Mode', self.switch_to_light_mode)
         appearance_menu.addAction('Dark Mode', self.switch_to_dark_mode)
-        settings_menu.addAction('Add New User')
+        settings_menu.addAction('Edit Account')
         settings_menu.addAction('Logout')
         
         help_menu = self.menu_bar.addMenu("Help")
@@ -79,7 +82,7 @@ class MainWindow(QMainWindow):
         # self.send_slip_page = SendSlipPage()
         self.admin_actions = AdminActions()
         self.personel_info_mgt = Pim()
-        # self.allowance_setup = AllowanceSetup()
+        self.my_account = MyAccount()
         self.salary_setup = SalarySetup()
         self.job_setup = JobSetup()
         self.reports = Reports()
@@ -93,7 +96,7 @@ class MainWindow(QMainWindow):
         self.stacked.addWidget(self.dashboard)
         self.stacked.addWidget(self.admin_actions)
         # self.stacked.addWidget(self.send_slip_page)
-        # self.stacked.addWidget(self.allowance_setup)
+        self.stacked.addWidget(self.my_account)
         self.stacked.addWidget(self.salary_setup)
         self.stacked.addWidget(self.job_setup)
         self.stacked.addWidget(self.personel_info_mgt)
@@ -105,7 +108,7 @@ class MainWindow(QMainWindow):
         toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(toolbar)
 
-        salary_setup = QAction("Transactional Actions", self)
+        salary_setup = QAction(icon=QIcon("assets/dashboard.png"), text="Transactional Actions", parent=self)
         salary_setup.setStatusTip("Send Slips To All Staff, Input Bulk Transaction, Add New User")
         salary_setup.triggered.connect(self.go_to_admin_actions)
         toolbar.addAction(salary_setup)
@@ -127,7 +130,7 @@ class MainWindow(QMainWindow):
         toolbar.addAction(job_setup)
 
         toolbar.addSeparator()
-        toolbar.addWidget(QPushButton("Click here"))
+        toolbar.addWidget(QPushButton(text="Click here", icon=QIcon("assets/money.png")))
 
 
     def set_default_window_size(self):
@@ -148,7 +151,10 @@ class MainWindow(QMainWindow):
     def go_to_salary_setup(self):
         self.stacked.setCurrentWidget(self.salary_setup)
     
-    def create_dialog(self):
+    def go_to_account_settings(self):
+        self.stacked.setCurrentWidget(self.my_account)
+    
+    def create_month_dialog(self):
         self.dialog = QDialog()
         self.dialog.setWindowTitle('Switch Month')
         self.dialog.resize(200, 100)  # Set the size of the dialog box
@@ -212,11 +218,56 @@ class MainWindow(QMainWindow):
 
         self.dialog.close()
 
+    def create_new_user_dialog(self):
+        self.dialog = QDialog()
+        self.dialog.setWindowTitle('Create New User')
+        self.dialog.resize(200, 100)  # Set the size of the dialog box
+
+        # Create widgets
+        m_label = QLabel("Select Month:")
+        combo_month = QComboBox()
+        # combo_month.setPlaceholderText(int(self.month))
+        for item in months:
+            month = item.get("month")
+            if month:
+                combo_month.addItem(month)
+
+        # Connect activated signal to a custom slot
+        combo_month.activated.connect(self.selected_month_changed)
+
+        self.selected_month = None  # Initialize selected month
+
+        y_label = QLabel("Select Year:")
+        new_year = QSpinBox()
+        self.year = int(self.year)
+        new_year.setRange(2015, 3015)
+        new_year.setValue(self.year)
+       
+       
+
+        button = QPushButton("Submit")
+
+        # Create layout
+        layout = QVBoxLayout(self.dialog)
+        layout.addWidget(m_label)
+        layout.addWidget(combo_month)
+        layout.addWidget(y_label)
+        layout.addWidget(new_year)
+      
+        layout.addWidget(button)
+
+        # Connect button clicked signal to a custom slot
+        button.clicked.connect(lambda: self.submit_month(year=new_year.text()))
+
+        self.dialog.exec_()
+
     def change_view(self, q):
         if q.text() == 'Transactional Actions':
             self.go_to_admin_actions()
         elif q.text() == 'Switch Month':
-            self.create_dialog()
+            self.create_month_dialog()
+        elif q.text() == 'Edit Account':
+            self.go_to_account_settings()
         elif q.text() == 'Job Setup':
             self.go_to_job_setup()
         elif q.text() == 'Dashboard':

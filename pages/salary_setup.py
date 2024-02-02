@@ -70,6 +70,7 @@ class SalarySetup(QTabWidget):
         form_layout.addWidget(l_salary_name)
         form_layout.addWidget(salary_name)
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2) # This only function is to space
         
         l_layout = QVBoxLayout() 
         l_layout.addLayout(form_layout, 1)
@@ -134,6 +135,7 @@ class SalarySetup(QTabWidget):
         
         submit_button = QPushButton('Submit')
         form_layout.addWidget(submit_button)
+        form_layout.addWidget(QWidget(), 2)
         # Set size policies for form elements
         # form_title.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         # l_deduction_name.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)

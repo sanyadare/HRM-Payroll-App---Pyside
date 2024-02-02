@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QTextEdit,QSpinBox, QComboBox,QGroupBox, QRadioButton, QDateEdit, QSizePolicy, QTabWidget, QLabel, QWidget,QGridLayout, QFormLayout, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
+from PySide6.QtWidgets import QTextEdit,QSpinBox, QComboBox,QGroupBox,QDateTimeEdit, QRadioButton, QDateEdit, QSizePolicy, QTabWidget, QLabel, QWidget,QGridLayout, QFormLayout, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
 from PySide6.QtGui import QIntValidator
 from dummy import d_bank_names, d_countries, d_job_titles, d_nature_of_appointment, d_employment_status, d_job_designation, d_values
 
@@ -43,6 +43,8 @@ class Employee(QTabWidget):
         self.account_details_tab()
         self.emergency_contact_tab()
         self.job_tab()
+        self.salary_tab()
+        self.qualifications_tab()
        
     def set_Edit(self):
         self.edit = True
@@ -527,6 +529,358 @@ class Employee(QTabWidget):
         main_layout.addLayout(r_layout, 1)
         # main_layout.addWidget(submit_button)
      
+    def salary_tab(self):
+        main_layout = QHBoxLayout(self.tab_salary)
+        
+        # Form elements for edit
+        l_layout = QVBoxLayout()    
+        # Bank Salary
+        cont_b_salary = QHBoxLayout()    
+        l_b_salary = QLabel('<i>Bank Salary:</i>')
+        b_salary = QLabel('<b>1234567</b>')
+        cont_b_salary.addWidget(l_b_salary)
+        cont_b_salary.addWidget(b_salary)
+        l_layout.addLayout(cont_b_salary)
+        
+        # total allowance
+        cont_t_allowance = QHBoxLayout()    
+        l_t_allowance = QLabel('<i>Total Allowance:</i>')
+        t_allowance = QLabel('<b>1234567</b>')
+        cont_t_allowance.addWidget(l_t_allowance)
+        cont_t_allowance.addWidget(t_allowance)
+        l_layout.addLayout(cont_t_allowance)
+        
+        # total deduction
+        cont_t_deduction = QHBoxLayout()    
+        l_t_deduction = QLabel('<i>Total Deduction:</i>')
+        t_deduction = QLabel('<b>1234567</b>')
+        cont_t_deduction.addWidget(l_t_deduction)
+        cont_t_deduction.addWidget(t_deduction)
+        l_layout.addLayout(cont_t_deduction)     
+        
+        # Gross Pay
+        cont_g_pay = QHBoxLayout()    
+        l_g_pay = QLabel('<i>Gross Pay:</i>')
+        g_pay = QLabel('<b>1234567</b>')
+        cont_g_pay.addWidget(l_g_pay)
+        cont_g_pay.addWidget(g_pay)
+        l_layout.addLayout(cont_g_pay)
+        
+        # Net Pay
+        cont_n_pay = QHBoxLayout()    
+        l_n_pay = QLabel('<i>Net Pay:</i>')
+        n_pay = QLabel('<b>1234567</b>')
+        cont_n_pay.addWidget(l_n_pay)
+        cont_n_pay.addWidget(n_pay)
+        l_layout.addLayout(cont_n_pay)
+        
+        # Allowance Table
+        l_layout.addWidget(QLabel("<b>Allowance Table</b>"))
+        allowance_table = QTableWidget()
+        allowance_table.setColumnCount(3)
+        allowance_table.setRowCount(3)
+        allowance_table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        # Add sample data
+        for row in range(3):
+            for col in range(5):
+                item = QTableWidgetItem(f"Sample Data {row+1}-{col+1}")
+                allowance_table.setItem(row, col, item)
 
+        # Set size policies for table
+        allowance_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+      
+        # Add table to layout
+        l_layout.addWidget(allowance_table)
+        
+        # Pay type
+        cont_p_type = QHBoxLayout()    
+        l_p_type = QLabel('<i>Pay Type:</i>')
+        p_type = QComboBox()
+        for item in self.d_values:
+            item = item.get('value')
+            if item:
+                p_type.addItem(item)
+        p_type.setEditable(True)
+        cont_p_type.addWidget(l_p_type)
+        cont_p_type.addWidget(p_type)
+        l_layout.addLayout(cont_p_type)
+        
+        # Name/Description
+        cont_n_desc = QHBoxLayout()  
+        l_n_desc = QLabel('<i>Name/Descrition:</i>')
+        n_desc = QComboBox()
+        for name in self.d_values:
+            name = name.get('value')
+            if name:
+                n_desc.addItem(name)
+        n_desc.setEditable(True)
+        cont_n_desc.addWidget(l_n_desc)
+        cont_n_desc.addWidget(n_desc)
+        l_layout.addLayout(cont_n_desc)
+        
+        # Amount
+        cont_amount = QHBoxLayout()  
+        l_amount = QLabel('<i>Amount:</i>')
+        amount = QSpinBox()
+        cont_amount.addWidget(l_amount)
+        cont_amount.addWidget(amount)
+        l_layout.addLayout(cont_amount)
+        
+        submit_button = QPushButton('Add Deduction/Allowance')
+        l_layout.addWidget(submit_button)
+        
+        # Right Layout
+        r_layout = QVBoxLayout()
+        
+        # Total Earnings
+        cont_t_earnings = QHBoxLayout()    
+        l_t_earnings = QLabel('<i>Total Earnings:</i>')
+        t_earnings = QLabel('<b>1234567</b>')
+        cont_t_earnings.addWidget(l_t_earnings)
+        cont_t_earnings.addWidget(t_earnings)
+        r_layout.addLayout(cont_t_earnings)
+        
+        # Rent
+        cont_rent = QHBoxLayout()    
+        l_rent = QLabel('<i>Rent:</i>')
+        rent = QLabel('<b>1234567</b>')
+        cont_rent.addWidget(l_rent)
+        cont_rent.addWidget(rent)
+        r_layout.addLayout(cont_rent)
+        
+        # Peculiar
+        cont_peculiar = QHBoxLayout()    
+        l_peculiar = QLabel('<i>Peculiar:</i>')
+        peculiar = QLabel('<b>1234567</b>')
+        cont_peculiar.addWidget(l_peculiar)
+        cont_peculiar.addWidget(peculiar)
+        r_layout.addLayout(cont_peculiar)
+        
+        # Deduction Table
+        r_layout.addWidget(QLabel("<b>Deduction Table</b>"))
+        deduction_table = QTableWidget()
+        deduction_table.setColumnCount(3)
+        deduction_table.setRowCount(3)
+        deduction_table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        # Add sample data
+        for row in range(3):
+            for col in range(5):
+                item = QTableWidgetItem(f"Sample Data {row+1}-{col+1}")
+                deduction_table.setItem(row, col, item)
+
+        # Set size policies for table
+        deduction_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+      
+        # Add table to layout
+        r_layout.addWidget(deduction_table)
+        
+         # Comment
+        cont_comment = QVBoxLayout()    
+        l_comment = QLabel('<i>Comment:</i>')
+        comment = QTextEdit()
+        cont_comment.addWidget(l_comment)
+        cont_comment.addWidget(comment)
+        r_layout.addLayout(cont_comment)
+        
+        comment_button = QPushButton("Submit Comment")
+        r_layout.addWidget(comment_button)
+        
+        main_layout.addLayout(l_layout)
+        main_layout.addLayout(r_layout)
   
+
+    def qualifications_tab(self):
+        main_layout = QVBoxLayout(self.tab_qualifications)
+        
+        # Experience
+        exp_layout = QHBoxLayout()
+        exp_layout_l = QVBoxLayout()
+        exp_layout_r = QVBoxLayout()
+        
+        exp_layout_l.addWidget(QLabel("<b>Experience</b>"))
+        
+        # Experience Table
+        exp_table = QTableWidget()
+        exp_table.setColumnCount(4)
+        exp_table.setRowCount(3)
+        exp_table.setHorizontalHeaderLabels(["Company Name", "Job Definition", 'From', 'To'])
+        # Add sample data
+        for row in range(3):
+            for col in range(5):
+                item = QTableWidgetItem(f"Sample Data {row+1}-{col+1}")
+                exp_table.setItem(row, col, item)
+
+        # Set size policies for table
+        exp_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+      
+        # Add table to layout
+        exp_layout_l.addWidget(exp_table)
+        
+        # Editable
+        exp_layout_r.addWidget(QLabel("<b>Add New Experience</b>"))
+        # company name
+        cont_comp_name = QVBoxLayout()
+        l_comp_name = QLabel("<i>Company Name:</i>")
+        comp_name = QLineEdit()
+        cont_comp_name.addWidget(l_comp_name)
+        cont_comp_name.addWidget(comp_name)
+        exp_layout_r.addLayout(cont_comp_name)
+        
+        # Job Title
+        cont_job_title = QVBoxLayout()
+        l_job_title = QLabel("<i>Job Title:</i>")
+        job_title = QLineEdit()
+        cont_job_title.addWidget(l_job_title)
+        cont_job_title.addWidget(job_title)
+        exp_layout_r.addLayout(cont_job_title)
+        
+         # From
+        cont_from_date_exp = QVBoxLayout()
+        l_from_date_exp = QLabel("<i>From Date:</i>")
+        from_date_exp = QDateEdit()
+        cont_from_date_exp.addWidget(l_from_date_exp)
+        cont_from_date_exp.addWidget(from_date_exp)
+        
+         # To
+        cont_to_date_exp = QVBoxLayout()
+        l_to_date_exp = QLabel("<i>To Date:</i>")
+        to_date_exp = QDateTimeEdit()
+        cont_to_date_exp.addWidget(l_to_date_exp)
+        cont_to_date_exp.addWidget(to_date_exp)
+        
+         # Exp From - To
+        cont_from_to_exp = QHBoxLayout()
+        cont_from_to_exp.addLayout(cont_from_date_exp, 1)
+        cont_from_to_exp.addLayout(cont_to_date_exp, 1)
+        exp_layout_r.addLayout(cont_from_to_exp)
+       
+        # Comment
+        cont_comment = QVBoxLayout()
+        l_comment = QLabel("<i>Comment:</i>")
+        comment = QLineEdit()
+        cont_comment.addWidget(l_comment)
+        cont_comment.addWidget(comment)
+        exp_layout_r.addLayout(cont_comment)
+        
+        cont_buttons = QHBoxLayout()
+        edit_button = QPushButton("Edit")
+        save_button = QPushButton("Save")
+        cont_buttons.addWidget(edit_button)
+        cont_buttons.addWidget(save_button)
+        exp_layout_r.addLayout(cont_buttons)
+        
+        # diplay on screen
+        exp_layout.addLayout(exp_layout_l)
+        exp_layout.addLayout(exp_layout_r)
+        
+        # Education Layout
+        edu_layout = QHBoxLayout()
+        edu_layout_l = QVBoxLayout()
+        edu_layout_r = QVBoxLayout()
+        
+        edu_layout_l.addWidget(QLabel("<b>Education</b>"))
+        
+        # Education Table
+        edu_table = QTableWidget()
+        edu_table.setColumnCount(5)
+        edu_table.setRowCount(3)
+        edu_table.setHorizontalHeaderLabels(["Institution Name", "Major/Discipline","Year Of Certificate", "From", "To"])
+        # Add sample data
+        for row in range(3):
+            for col in range(5):
+                item = QTableWidgetItem(f"Sample Data {row+1}-{col+1}")
+                edu_table.setItem(row, col, item)
+
+        # Set size policies for table
+        edu_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+      
+        # Add table to layout
+        edu_layout_l.addWidget(edu_table)
+        
+        # Editable
+        edu_layout_r.addWidget(QLabel("<b>Add New Education Qualification</b>"))
+        # Level
+        cont_level = QVBoxLayout()
+        l_level = QLabel("<i>Level:</i>")
+        c_level = QComboBox()
+        for item in self.d_values:
+            item = item.get('value')
+            if item:
+                c_level.addItem(item)
+        c_level.setEditable(True)
+        cont_level.addWidget(l_level)
+        cont_level.addWidget(c_level)
+        edu_layout_r.addLayout(cont_level)
+        
+        # Institute
+        cont_institute = QVBoxLayout()
+        l_institute = QLabel("<i>Institute:</i>")
+        institute = QLineEdit()
+        cont_institute.addWidget(l_institute)
+        cont_institute.addWidget(institute)
+        edu_layout_r.addLayout(cont_institute)
+        
+         # major
+        cont_major = QVBoxLayout()
+        l_major = QLabel("<i>Major / Specialization:</i>")
+        major = QLineEdit()
+        cont_major.addWidget(l_major)
+        cont_major.addWidget(major)
+        edu_layout_r.addLayout(cont_major)
+        
+         # Year
+        cont_year = QVBoxLayout()
+        l_year = QLabel("<i>Year:</i>")
+        year = QSpinBox()
+        year.setRange(1000, 4000)
+        cont_year.addWidget(l_year)
+        cont_year.addWidget(year)
+
+         # gpa
+        cont_gpa = QVBoxLayout()
+        l_gpa = QLabel("<i>G.P.A:</i>")
+        gpa = QLineEdit()
+        cont_gpa.addWidget(l_gpa)
+        cont_gpa.addWidget(gpa)
+        
+        # Year And GPA
+        cont_year_gpa = QHBoxLayout()
+        cont_year_gpa.addLayout(cont_year, 1)
+        cont_year_gpa.addLayout(cont_gpa, 1)
+        edu_layout_r.addLayout(cont_year_gpa)
+        
+         # From
+        cont_from_date_edu = QVBoxLayout()
+        l_from_date_edu = QLabel("<i>From Date:</i>")
+        from_date_edu = QDateEdit()
+        cont_from_date_edu.addWidget(l_from_date_edu)
+        cont_from_date_edu.addWidget(from_date_edu)
+        
+         # To
+        cont_to_date_edu = QVBoxLayout()
+        l_to_date_edu = QLabel("<i>To Date:</i>")
+        to_date_edu = QDateTimeEdit()
+        cont_to_date_edu.addWidget(l_to_date_edu)
+        cont_to_date_edu.addWidget(to_date_edu)
+        
+         # Edu From - To
+        cont_from_to_edu = QHBoxLayout()
+        cont_from_to_edu.addLayout(cont_from_date_edu, 1)
+        cont_from_to_edu.addLayout(cont_to_date_edu, 1)
+        edu_layout_r.addLayout(cont_from_to_edu)
+        
+        cont_buttons = QHBoxLayout()
+        edit_button = QPushButton("Edit")
+        save_button = QPushButton("Save")
+        cont_buttons.addWidget(edit_button)
+        cont_buttons.addWidget(save_button)
+        edu_layout_r.addLayout(cont_buttons)
+        
+        edu_layout.setSizeConstraint
+        # diplay on screen
+        edu_layout.addLayout(edu_layout_l)
+        edu_layout.addLayout(edu_layout_r)
+        
+        main_layout.addLayout(exp_layout)
+        main_layout.addLayout(edu_layout)
     
