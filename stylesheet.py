@@ -73,7 +73,9 @@ LIGHT_GREEN_MODE_STYLESHEET = """
     }
     
     QIcon {
-        background-color: #FFFFFF;
+        color: white;
+        background-color: white;
+        border-color: white;
         
     }
     
@@ -180,7 +182,7 @@ LIGHT_BLUE_MODE_STYLESHEET = """
     }
     
     QIcon {
-        background-color: #FFFFFF;
+        color: #FFFFFF;
     }
     
     QComboBox, QSpinBox, QDateEdit, QLineEdit, QTextEdit {

@@ -135,7 +135,7 @@ class Pim(QTabWidget):
         search_layout = QHBoxLayout()
         search_input = QLineEdit()
         search_input.setPlaceholderText("Search a Staff By Staff ID")
-        search_button = QPushButton(icon=QIcon("assets/logo.png"))
+        search_button = QPushButton(icon=QIcon("assets/search-solid.svg"))
         search_layout.addWidget(search_input, 7)
         search_layout.addWidget(search_button, 1)
         r_layout.addLayout(search_layout)
