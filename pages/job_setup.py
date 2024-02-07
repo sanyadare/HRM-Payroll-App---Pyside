@@ -1,14 +1,13 @@
 from PySide6.QtWidgets import QComboBox, QHBoxLayout, QLabel, QSizePolicy, QLineEdit, QSpinBox, QTabWidget, QWidget, QFormLayout, QTableWidget, QTableWidgetItem, QVBoxLayout, QPushButton
 from PySide6.QtGui import QIntValidator
-
+from dummy import d_job_titles
 
 class JobSetup(QTabWidget):
     def __init__(self):
         super().__init__()
 
-        self.job_titles = [
-            'title 1', 'title 2'
-        ]
+        self.job_titles = d_job_titles
+        
         # Create three tabs
         self.tab_title = QWidget()
         self.tab_status = QWidget()
@@ -27,24 +26,24 @@ class JobSetup(QTabWidget):
         self.addTab(self.tab_state, "State Setup")
         self.addTab(self.tab_college, "College Setup")
 
-        # Setup tab content
-        self.setup_title_tab()
-        self.setup_status_tab()
-        self.setup_grade_tab()
-        self.setup_category_tab()
-        self.setup_bank_tab()
-        self.setup_state_tab()
-        self.setup_college_tab()
+        # Setup/Show The tab content
+        self._setup_title_tab()
+        self._setup_status_tab()
+        self._setup_grade_tab()
+        self._setup_category_tab()
+        self._setup_bank_tab()
+        self._setup_state_tab()
+        self._setup_college_tab()
 
-    def setup_title_tab(self):
+    def _setup_title_tab(self):
         main_layout = QHBoxLayout(self.tab_title)
         
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(2)
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(["ID", "Title Name"])
 
         # Add sample data
         for row in range(3):
@@ -82,15 +81,15 @@ class JobSetup(QTabWidget):
         main_layout.addLayout(l_layout, 1)
         main_layout.addStretch()
 
-    def setup_status_tab(self):
+    def _setup_status_tab(self):
         main_layout = QHBoxLayout(self.tab_status)
         
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(2)
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(["ID", "Status Name"])
 
         # Add sample data
         for row in range(3):
@@ -128,15 +127,15 @@ class JobSetup(QTabWidget):
         main_layout.addLayout(l_layout, 1)
         main_layout.addStretch()
 
-    def setup_grade_tab(self):
+    def _setup_grade_tab(self):
         main_layout = QHBoxLayout(self.tab_grade)
         
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(2)
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(["ID", "Grade Name"])
 
         # Add sample data
         for row in range(3):
@@ -174,15 +173,15 @@ class JobSetup(QTabWidget):
         main_layout.addLayout(l_layout, 1)
         main_layout.addStretch()
     
-    def setup_category_tab(self):
+    def _setup_category_tab(self):
         main_layout = QHBoxLayout(self.tab_category)
         
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(2)
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(["ID", "Category Name"])
 
         # Add sample data
         for row in range(3):
@@ -220,15 +219,15 @@ class JobSetup(QTabWidget):
         main_layout.addLayout(l_layout, 1)
         main_layout.addStretch()
     
-    def setup_bank_tab(self):
+    def _setup_bank_tab(self):
         main_layout = QHBoxLayout(self.tab_bank)
         
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(3)
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(["ID", "Bank Name", 'Sort Code'])
 
         # Add sample data
         for row in range(3):
@@ -272,15 +271,15 @@ class JobSetup(QTabWidget):
         main_layout.addLayout(l_layout, 1)
         main_layout.addStretch()
     
-    def setup_state_tab(self):
+    def _setup_state_tab(self):
         main_layout = QHBoxLayout(self.tab_state)
         
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(2)
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(["ID", "State Name"])
 
         # Add sample data
         for row in range(3):
@@ -318,15 +317,15 @@ class JobSetup(QTabWidget):
         main_layout.addLayout(l_layout, 1)
         main_layout.addStretch()
     
-    def setup_college_tab(self):
+    def _setup_college_tab(self):
         main_layout = QHBoxLayout(self.tab_college)
         
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(4)
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(["ID", "Title Name", "Unit", "Sub Unit"])
 
         # Add sample data
         for row in range(3):
@@ -345,7 +344,7 @@ class JobSetup(QTabWidget):
         l_job_title = QLabel('<i>Job Title:</i>')
         job_title = QComboBox()
         for title in self.job_titles:
-            job_title.addItem(title)
+            job_title.addItem(title['title'])
         l_unit_name = QLabel('<i>Unit Name:</i>')
         unit_name = QLineEdit()
         l_sub_unit_name = QLabel('<i>Sub-Unit Name:</i>')

@@ -1,15 +1,9 @@
 from PySide6.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout
 
-class LoginScreen(QWidget):
+class LoginPage(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Login")
-        self.setGeometry(300, 300, 300, 150)
-
-        self.init_ui()
-
-    def init_ui(self):
         layout = QVBoxLayout()
 
         # Username input
@@ -33,6 +27,8 @@ class LoginScreen(QWidget):
 
         self.setLayout(layout)
 
+
+
     def check_login(self):
         # Simple login check (replace with your authentication logic)
         username = self.username_input.text()
@@ -41,6 +37,8 @@ class LoginScreen(QWidget):
         if username == "admin" and password == "admin":
             print("Login successful!")
             # self.accept() # Close the login screen
+            # self.accept()
+            self.close()
             return True
         
         else:

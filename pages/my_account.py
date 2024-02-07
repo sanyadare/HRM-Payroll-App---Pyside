@@ -56,18 +56,21 @@ class MyAccount(QTabWidget):
          # Old Password
         l_old_password = QLabel("<i>Old Password:</i>")
         old_password = QLineEdit()
+        old_password.setEchoMode(QLineEdit.Password)
         edit_password_layout.addWidget(l_old_password)
         edit_password_layout.addWidget(old_password)
         
          # new pass word
         l_new_password = QLabel("<i>New Password:</i>")
         new_password = QLineEdit()
+        new_password.setEchoMode(QLineEdit.Password)
         edit_password_layout.addWidget(l_new_password)
         edit_password_layout.addWidget(new_password)
         
          # confirm new pass word
         l_c_new_password = QLabel("<i>Confirm New Password:</i>")
         c_new_password = QLineEdit()
+        c_new_password.setEchoMode(QLineEdit.Password)
         edit_password_layout.addWidget(l_c_new_password)
         edit_password_layout.addWidget(c_new_password)
         
@@ -111,12 +114,14 @@ class MyAccount(QTabWidget):
         # Password
         l_password = QLabel("<i>Password:</i>")
         password = QLineEdit()
+        password.setEchoMode(QLineEdit.Password)
         form_layout.addWidget(l_password)
         form_layout.addWidget(password)
          
          # Confirm Password
         l_c_password = QLabel("<i>Confirm Password:</i>")
         c_password = QLineEdit()
+        c_password.setEchoMode(QLineEdit.Password)
         form_layout.addWidget(l_c_password)
         form_layout.addWidget(c_password)
         
@@ -135,8 +140,3 @@ class MyAccount(QTabWidget):
         
        
         
-        # password
-        # confirm/password
-        # address
-
-

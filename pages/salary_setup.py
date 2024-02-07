@@ -1,21 +1,18 @@
 from PySide6.QtWidgets import QComboBox, QSpinBox,QSizePolicy, QTabWidget, QLabel, QWidget, QFormLayout, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
 from PySide6.QtGui import QIntValidator
+from dummy import d_account_name, d_currencies
+
 
 class SalarySetup(QTabWidget):
     def __init__(self):
+        """
+        This Class create the Salary Setup Page(TabWidget)
+        """
+        
         super().__init__()
 
-        self.account_names = [
-            'First Bank',
-            'GT Bank',
-            'Zenith Bank'
-        ]
-        self.currencies = [
-            'Naira',
-            'Dollars',
-            'Euro',
-            'Pound'
-        ]
+        self.account_names = d_account_name
+        self.currencies = d_currencies
         
         # Create three tabs
         self.tab_allowance = QWidget()
@@ -28,18 +25,19 @@ class SalarySetup(QTabWidget):
         self.addTab(self.tab_grade, "Salary Grade")
 
         # Setup tab content
-        self.setup_allowance_tab()
-        self.setup_deduction_tab()
-        self.setup_grade_tab()
+        self._setup_allowance_tab()
+        self._setup_deduction_tab()
+        self._setup_grade_tab()
 
-    def setup_allowance_tab(self):
+    def _setup_allowance_tab(self):
         main_layout = QHBoxLayout(self.tab_allowance)
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        columns = ["ID", "Allowance Name"]
+        table.setColumnCount(len(columns))
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(columns)
 
         # Add sample data
         for row in range(3):
@@ -81,14 +79,15 @@ class SalarySetup(QTabWidget):
         pass
 
 
-    def setup_deduction_tab(self):
+    def _setup_deduction_tab(self):
         main_layout = QHBoxLayout(self.tab_deduction)
         
         # Add table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        columns = ["ID", "Deduction Name"]
+        table.setColumnCount(len(columns))
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(columns)
 
         # Add sample data
         for row in range(3):
@@ -153,14 +152,15 @@ class SalarySetup(QTabWidget):
         pass
 
 
-    def setup_grade_tab(self):
+    def _setup_grade_tab(self):
         main_layout = QHBoxLayout(self.tab_grade)
         
         # Add table
+        columns = ["ID","Name", "Amount", "Rent", "Percular", "Currency", "Teaching", "Rural", "Call Duty", "Level", "Step"]
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setRowCount(30)
-        table.setHorizontalHeaderLabels(["Name", "Amount", 'three'])
+        table.setColumnCount(len(columns))
+        table.setRowCount(3)
+        table.setHorizontalHeaderLabels(columns)
 
         # Add sample data
         for row in range(3):

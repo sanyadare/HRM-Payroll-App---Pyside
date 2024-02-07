@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QTextEdit,QSpinBox, QComboBox,QGroupBox,QDateTimeEdit, QRadioButton, QDateEdit, QSizePolicy, QTabWidget, QLabel, QWidget,QGridLayout, QFormLayout, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
+from PySide6.QtWidgets import QTextEdit,QSpinBox, QComboBox,QGroupBox,QRadioButton, QDateEdit, QSizePolicy, QTabWidget, QLabel, QWidget,QGridLayout, QFormLayout, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
 from PySide6.QtGui import QIntValidator
 from dummy import d_bank_names, d_countries, d_job_titles, d_nature_of_appointment, d_employment_status, d_job_designation, d_values
 
@@ -59,10 +59,7 @@ class Employee(QTabWidget):
         main_layout = QHBoxLayout(self.tab_personal_details)
         
         # Form elements for edit
-        grid_layout = QGridLayout()
         full_name_layout = QVBoxLayout()
-        # l_full_name = QLabel('Full Name')
-        # full_name_layout.addWidget(l_full_name)
         
         # surname
         g_surname = QVBoxLayout()
@@ -80,19 +77,24 @@ class Employee(QTabWidget):
         l_first_name = QLabel('<i>First Name:</i>')
         new_first_name = QLineEdit()
         new_first_name.setPlaceholderText('current first name')
-        g_surname.addWidget(l_first_name)
-        g_surname.addWidget(new_first_name)
-        full_name_layout.addLayout(g_first_name)
+        g_first_name.addWidget(l_first_name)
+        g_first_name.addWidget(new_first_name)
+        # full_name_layout.addLayout(g_first_name)
         
         # Middle name
         g_middle_name = QVBoxLayout()
         l_middle_name = QLabel('<i>Middle Name:</i>')
         new_middle_name = QLineEdit()
         new_middle_name.setPlaceholderText('current middle name')
-        full_name_layout.addWidget(l_middle_name)
-        full_name_layout.addWidget(new_middle_name)
-        full_name_layout.addLayout(g_middle_name)
+        g_middle_name.addWidget(l_middle_name)
+        g_middle_name.addWidget(new_middle_name)
+        # full_name_layout.addLayout(g_middle_name)
         
+        # first and middle name
+        f_m_cont = QHBoxLayout()
+        f_m_cont.addLayout(g_first_name)
+        f_m_cont.addLayout(g_middle_name)
+        full_name_layout.addLayout(f_m_cont)
         
         employee_layout = QVBoxLayout()
         # Employee id
@@ -100,51 +102,56 @@ class Employee(QTabWidget):
         l_employee_id = QLabel('<i>Employee ID:</i>')
         new_employee_id = QLineEdit()
         new_employee_id.setPlaceholderText('current employee id')
-        full_name_layout.addWidget(l_employee_id)
-        full_name_layout.addWidget(new_employee_id)
-        full_name_layout.addLayout(g_employee_id)
+        g_employee_id.addWidget(l_employee_id)
+        g_employee_id.addWidget(new_employee_id)
         
         # Email Address
         g_employee_email = QVBoxLayout()
         l_employee_email = QLabel('<i>Email Address:</i>')
         new_employee_email = QLineEdit()
         new_employee_email.setPlaceholderText('current email address')
-        full_name_layout.addWidget(l_employee_email)
-        full_name_layout.addWidget(new_employee_email)
-        full_name_layout.addLayout(g_employee_email)
+        g_employee_email.addWidget(l_employee_email)
+        g_employee_email.addWidget(new_employee_email)
+
+         # employee ID + Email
+        id_e_cont = QHBoxLayout()
+        id_e_cont.addLayout(g_employee_id)
+        id_e_cont.addLayout(g_employee_email)
+        full_name_layout.addLayout(id_e_cont)
         
         # Government ID
         g_gov_id = QVBoxLayout()
         l_gov_id = QLabel('<i>Govenment ID:</i>')
         new_gov_id = QLineEdit()
         new_gov_id.setPlaceholderText('current')
-        full_name_layout.addWidget(l_gov_id)
-        full_name_layout.addWidget(new_gov_id)
-        full_name_layout.addLayout(g_gov_id)
+        g_gov_id.addWidget(l_gov_id)
+        g_gov_id.addWidget(new_gov_id)
         
         # Expiring Date
         g_exp_date = QVBoxLayout()
         l_exp_date = QLabel('<i>Expiring Date:</i>')
         new_exp_date = QDateEdit()
         # new_exp_date.setPlaceholderText('current')
-        full_name_layout.addWidget(l_exp_date)
-        full_name_layout.addWidget(new_exp_date)
-        full_name_layout.addLayout(g_exp_date)
+        g_exp_date.addWidget(l_exp_date)
+        g_exp_date.addWidget(new_exp_date)
         
-        # nationality, dob
+        # gov id + expiration date
+        gid_exp_cont = QHBoxLayout()
+        gid_exp_cont.addLayout(g_gov_id, 1)
+        gid_exp_cont.addLayout(g_exp_date, 1)
+        full_name_layout.addLayout(gid_exp_cont)
         
         # gender
-        
+        g_gender_options = QHBoxLayout()
         male = QRadioButton("Male")
         female = QRadioButton("Female")    
         male.setChecked(True)    
         l_gender = QLabel('<i>Gender:</i>')
-        g_gender = QHBoxLayout()
+        g_gender = QVBoxLayout()
+        g_gender_options.addWidget(male)
+        g_gender_options.addWidget(female)
         g_gender.addWidget(l_gender)
-        g_gender.addWidget(male)
-        g_gender.addWidget(female)
-        # gender.setLayout(g_gender)
-        full_name_layout.addLayout(g_gender)
+        g_gender.addLayout(g_gender_options)
         
         # marital Status   
         g_marital_status = QVBoxLayout()
@@ -155,9 +162,14 @@ class Employee(QTabWidget):
         c_marital_status.addItem('Divorced')
         g_marital_status.addWidget(l_marital_status)
         g_marital_status.addWidget(c_marital_status)
-        full_name_layout.addLayout(g_marital_status)
         
-        # marital Status   
+        # gender and marital status
+        g_m_cont = QHBoxLayout()
+        g_m_cont.addLayout(g_gender, 1)
+        g_m_cont.addLayout(g_marital_status, 1)
+        full_name_layout.addLayout(g_m_cont)
+        
+        # nationality   
         g_nationality = QVBoxLayout()
         l_nationality = QLabel('<i>Nationality:</i>')
         c_nationality =QComboBox()
@@ -165,7 +177,6 @@ class Employee(QTabWidget):
         c_nationality.addItem('Other')
         g_nationality.addWidget(l_nationality)
         g_nationality.addWidget(c_nationality)
-        full_name_layout.addLayout(g_nationality)
         
         # dob
         g_dob = QVBoxLayout()
@@ -173,7 +184,14 @@ class Employee(QTabWidget):
         c_dob =QDateEdit()
         g_dob.addWidget(l_dob)
         g_dob.addWidget(c_dob)
-        full_name_layout.addLayout(g_dob)
+        
+        # nationilty + dob
+        n_dob_cont = QHBoxLayout()
+        n_dob_cont.addLayout(g_nationality)
+        n_dob_cont.addLayout(g_dob)
+        full_name_layout.addLayout(n_dob_cont)
+        
+        full_name_layout.addWidget(QWidget(), 5)
         
         if self.edit:
             submit_button = QPushButton('Submit')
@@ -213,25 +231,35 @@ class Employee(QTabWidget):
         form_layout.addWidget(new_address_2)
         
         # City
+        g_city = QVBoxLayout()
         l_city = QLabel('<i>City:</i>')
         new_city = QLineEdit()
         new_city.setPlaceholderText('current city')
-        form_layout.addWidget(l_city)
-        form_layout.addWidget(new_city)        
+        g_city.addWidget(l_city)
+        g_city.addWidget(new_city)        
         
         # State/Province
+        g_state = QVBoxLayout()
         l_state_province = QLabel('<i>State/Province:</i>')
         new_state_province = QLineEdit()
         # new_state_province.setPlaceholderText('current employee id')
-        form_layout.addWidget(l_state_province)
-        form_layout.addWidget(new_state_province)
+        g_state.addWidget(l_state_province)
+        g_state.addWidget(new_state_province)
         
         # Zip/Postal Code
+        g_zip = QVBoxLayout()
         l_zip_code = QLabel('<i>Zip Code:</i>')
         new_zip_code = QLineEdit()
         # new_zip_code.setPlaceholderText('current')
-        form_layout.addWidget(l_zip_code)
-        form_layout.addWidget(new_zip_code)
+        g_zip.addWidget(l_zip_code)
+        g_zip.addWidget(new_zip_code)
+        
+        # city + state + zip
+        c_s_zip_cont = QHBoxLayout()
+        c_s_zip_cont.addLayout(g_city)
+        c_s_zip_cont.addLayout(g_state)
+        c_s_zip_cont.addLayout(g_zip)
+        form_layout.addLayout(c_s_zip_cont)
         
         # Country
         l_country = QLabel('<i>Country:</i>')
@@ -245,20 +273,24 @@ class Employee(QTabWidget):
         form_layout.addWidget(new_country)
         
         # Mobile Telephone
+        g_mobile = QVBoxLayout()
         l_mobile_tel = QLabel('<i>Mobile Telephone:</i>')
         new_mobile_tel = QLineEdit()
-        # new_mobile_tel.setValidator(QIntValidator)
-        # new_exp_date.setPlaceholderText('current')
-        form_layout.addWidget(l_mobile_tel)
-        form_layout.addWidget(new_mobile_tel)
+        g_mobile.addWidget(l_mobile_tel)
+        g_mobile.addWidget(new_mobile_tel)
         
-        # Mobile Telephone
+        # Work Telephone
+        g_work = QVBoxLayout()
         l_work_tel = QLabel('<i>Work Telephone:</i>')
         new_work_tel = QLineEdit()
-        # new_work_tel.setValidator(QIntValidator)
-        # new_exp_date.setPlaceholderText('current')
-        form_layout.addWidget(l_work_tel)
-        form_layout.addWidget(new_work_tel)
+        g_work.addWidget(l_work_tel)
+        g_work.addWidget(new_work_tel)
+        
+        # Mobile + Work Telephone
+        m_m_t_cont = QHBoxLayout()
+        m_m_t_cont.addLayout(g_mobile, 1)
+        m_m_t_cont.addLayout(g_work, 1)
+        form_layout.addLayout(m_m_t_cont)
         
         # Email Address
         l_email_address = QLabel('<i>Email Address:</i>')
@@ -266,6 +298,7 @@ class Employee(QTabWidget):
         # new_exp_date.setPlaceholderText('current')
         form_layout.addWidget(l_email_address)
         form_layout.addWidget(new_email_address)
+        form_layout.addWidget(QWidget(), 5)
     
         submit_button = QPushButton('Submit')
         main_layout.addLayout(form_layout)
@@ -275,23 +308,32 @@ class Employee(QTabWidget):
         main_layout = QHBoxLayout(self.tab_account_details)
         
         # Form elements for edit
-        form_layout = QVBoxLayout()        
+        form_layout = QVBoxLayout()   
+             
         # bank name
+        g_bank_name = QVBoxLayout()
         l_bank_name = QLabel('<i>Bank Name:</i>')
         new_bank_name = QComboBox()
         for country in self.bank_names:
             item = country.get('name')
             if item:
                 new_bank_name.addItem(item)
-        form_layout.addWidget(l_bank_name)
-        form_layout.addWidget(new_bank_name)
+        g_bank_name.addWidget(l_bank_name)
+        g_bank_name.addWidget(new_bank_name)
         
         # account number
-        l_account_name = QLabel('<i>Account Number:</i>')
-        new_account_name = QLineEdit()
+        g_account_number = QVBoxLayout()
+        l_account_number = QLabel('<i>Account Number:</i>')
+        new_account_number = QLineEdit()
         # new_account_name.setValidator(QIntValidator)
-        form_layout.addWidget(l_account_name)
-        form_layout.addWidget(new_account_name)
+        g_account_number.addWidget(l_account_number)
+        g_account_number.addWidget(new_account_number)
+        
+        # account name + account number
+        acct_cont = QHBoxLayout()
+        acct_cont.addLayout(g_bank_name, 1)
+        acct_cont.addLayout(g_account_number, 1)
+        form_layout.addLayout(acct_cont)
         
         # sort code
         l_sort_code = QLabel('<i>Sort Code:</i>')
@@ -312,21 +354,30 @@ class Employee(QTabWidget):
         form_layout.addWidget(new_nin)
         
         # pension bank name
+        g_p_bank_name = QVBoxLayout()
         l_pension_bank_name = QLabel('<i>Pension Bank Name:</i>')
         new_pension_bank_name = QComboBox()
         for country in self.bank_names:
             item = country.get('name')
             if item:
                 new_pension_bank_name.addItem(item)
-        form_layout.addWidget(l_pension_bank_name)
-        form_layout.addWidget(new_pension_bank_name)
+        g_p_bank_name.addWidget(l_pension_bank_name)
+        g_p_bank_name.addWidget(new_pension_bank_name)
         
         # pension account number
-        l_pension_account_name = QLabel('<i>Account Number:</i>')
-        new_pension_account_name = QLineEdit()
+        g_p_account_number = QVBoxLayout()
+        l_pension_account_number = QLabel('<i>Pension Account Number:</i>')
+        new_pension_account_number = QLineEdit()
         # new_account_name.setValidator(QIntValidator)
-        form_layout.addWidget(l_pension_account_name)
-        form_layout.addWidget(new_pension_account_name)
+        g_p_account_number.addWidget(l_pension_account_number)
+        g_p_account_number.addWidget(new_pension_account_number)
+        
+        # pension details cont
+        p_acct_cont = QHBoxLayout()
+        p_acct_cont.addLayout(g_p_bank_name,1 )
+        p_acct_cont.addLayout(g_p_account_number, 1)
+        form_layout.addLayout(p_acct_cont)
+        form_layout.addWidget(QWidget(), 5)
         
         submit_button = QPushButton('Submit')
         main_layout.addLayout(form_layout)
@@ -354,22 +405,32 @@ class Employee(QTabWidget):
         form_layout.addWidget(new_job_title)
         
         # from date
+        g_from_date = QVBoxLayout()
         l_from_date = QLabel('<i>From Date:</i>')
         new_from_date = QDateEdit()
-        form_layout.addWidget(l_from_date)
-        form_layout.addWidget(new_from_date)        
+        g_from_date.addWidget(l_from_date)
+        g_from_date.addWidget(new_from_date)        
         
         # to date
+        g_to_date = QVBoxLayout()
         l_to_date = QLabel('<i>To Date:</i>')
         new_to_date = QLineEdit()
-        form_layout.addWidget(l_to_date)
-        form_layout.addWidget(new_to_date)
+        g_to_date.addWidget(l_to_date)
+        g_to_date.addWidget(new_to_date)
+        
+        # from date + to date
+        f_t_date_cont = QHBoxLayout()
+        f_t_date_cont.addLayout(g_from_date, 1)
+        f_t_date_cont.addLayout(g_to_date, 1)
+        form_layout.addLayout(f_t_date_cont)
         
         # comment
         l_comment = QLabel('<i>Comment:</i>')
         new_comment = QTextEdit()
         form_layout.addWidget(l_comment)
         form_layout.addWidget(new_comment)
+        
+        form_layout.addWidget(QWidget(), 5)
         
     
         submit_button = QPushButton('Submit')
@@ -384,57 +445,70 @@ class Employee(QTabWidget):
         l_layout = QVBoxLayout()     
            
         # job title
+        g_job_title = QVBoxLayout()
         l_job_title = QLabel('<i>Job Title:</i>')
         new_job_title = QComboBox()
         for country in self.job_titles:
             item = country.get('title')
             if item:
                 new_job_title.addItem(item)
-        l_layout.addWidget(l_job_title)
-        l_layout.addWidget(new_job_title)
+        g_job_title.addWidget(l_job_title)
+        g_job_title.addWidget(new_job_title)
         
         # Nature of Appointment
+        g_NOA = QVBoxLayout()
         l_NOA = QLabel('<i>Nature Of Appointment:</i>')
         new_NOA = QComboBox()
         for nature in self.nature_of_appointment:
             item = nature.get('title')
             if item:
                 new_NOA.addItem(item)
-        l_layout.addWidget(l_NOA)
-        l_layout.addWidget(new_NOA)
+        g_NOA.addWidget(l_NOA)
+        g_NOA.addWidget(new_NOA)
         
-        # job designation
+         # job designation
+        g_job_designation = QVBoxLayout()
         l_job_designation = QLabel('<i>Job Designation:</i>')
         new_job_designation = QComboBox()
         for job in self.job_designation:
             item = job.get('name')
             if item:
                 new_job_designation.addItem(item)
-        l_layout.addWidget(l_job_designation)
-        l_layout.addWidget(new_job_designation)     
+        g_job_designation.addWidget(l_job_designation)
+        g_job_designation.addWidget(new_job_designation)     
+        
+        # job title + nature of NOA + job designation
+        jt_noa_cont = QHBoxLayout()
+        jt_noa_cont.addLayout(g_job_title, 3)
+        jt_noa_cont.addLayout(g_NOA, 2)
+        jt_noa_cont.addLayout(g_job_designation, 2)
+        l_layout.addLayout(jt_noa_cont)
+        
         
         # Employment Status
+        g_employment_status = QVBoxLayout()
         l_employment_status = QLabel('<i>Employment Status:</i>')
         new_employment_status = QComboBox()
         for status in self.employment_status:
             item = status.get('name')
             if item:
                 new_employment_status.addItem(item)
-        l_layout.addWidget(l_employment_status)
-        l_layout.addWidget(new_employment_status)     
+        g_employment_status.addWidget(l_employment_status)
+        g_employment_status.addWidget(new_employment_status)     
         
         # Job Category
+        g_job_category = QVBoxLayout()
         l_job_category = QLabel('<i>Job Category:</i>')
         new_job_category = QComboBox()
-        # new_job_category.setEditable(True)
         for item in self.d_values:
             item = item.get('value')
             if item:
                 new_job_category.addItem(item)
-        l_layout.addWidget(l_job_category)
-        l_layout.addWidget(new_job_category)     
+        g_job_category.addWidget(l_job_category)
+        g_job_category.addWidget(new_job_category)     
         
         # Grade level
+        g_grade_level = QVBoxLayout()
         l_grade_level = QLabel('<i>Level:</i>')
         new_grade_level = QComboBox()
         new_grade_level.setEditable(True)
@@ -442,10 +516,18 @@ class Employee(QTabWidget):
             item = item.get('value')
             if item:
                 new_grade_level.addItem(item)
-        l_layout.addWidget(l_grade_level)
-        l_layout.addWidget(new_grade_level)  
+        g_grade_level.addWidget(l_grade_level)
+        g_grade_level.addWidget(new_grade_level)  
+        
+        # employment status + job category + grade level
+        jd_es_cont = QHBoxLayout()
+        jd_es_cont.addLayout(g_employment_status, 2)
+        jd_es_cont.addLayout(g_job_category, 2)
+        jd_es_cont.addLayout(g_grade_level, 3)
+        l_layout.addLayout(jd_es_cont)
         
         # Unit
+        g_unit = QVBoxLayout()
         l_unit = QLabel('<i>Unit:</i>')
         new_unit = QComboBox()
         new_unit.setEditable(True)
@@ -453,10 +535,11 @@ class Employee(QTabWidget):
             item = item.get('value')
             if item:
                 new_unit.addItem(item)
-        l_layout.addWidget(l_unit)
-        l_layout.addWidget(new_unit)  
+        g_unit.addWidget(l_unit)
+        g_unit.addWidget(new_unit)  
         
         # Sub Unit
+        g_sub_unit = QVBoxLayout()
         l_sub_unit = QLabel('<i>Sub Unit:</i>')
         new_sub_unit = QComboBox()
         new_sub_unit.setEditable(True)
@@ -464,10 +547,11 @@ class Employee(QTabWidget):
             item = item.get('value')
             if item:
                 new_sub_unit.addItem(item)
-        l_layout.addWidget(l_sub_unit)
-        l_layout.addWidget(new_sub_unit)  
+        g_sub_unit.addWidget(l_sub_unit)
+        g_sub_unit.addWidget(new_sub_unit)  
         
         # Location
+        g_location = QVBoxLayout()
         l_location = QLabel('<i>Location:</i>')
         new_location = QComboBox()
         new_location.setEditable(True)
@@ -475,58 +559,89 @@ class Employee(QTabWidget):
             item = item.get('value')
             if item:
                 new_location.addItem(item)
-        l_layout.addWidget(l_location)
-        l_layout.addWidget(new_location)  
+        g_location.addWidget(l_location)
+        g_location.addWidget(new_location)  
         
-        r_layout = QVBoxLayout()
+        # Unit + Sub Unit + Location
+        gl_u_su_cont = QHBoxLayout()
+        gl_u_su_cont.addLayout(g_unit)
+        gl_u_su_cont.addLayout(g_sub_unit)
+        gl_u_su_cont.addLayout(g_location)
+        l_layout.addLayout(gl_u_su_cont)
+        
+        
         # joined date
+        g_joined_date = QVBoxLayout()
         l_joined_date = QLabel('<i>Joined Date:</i>')
         new_joined_date = QDateEdit()
-        r_layout.addWidget(l_joined_date)
-        r_layout.addWidget(new_joined_date)
+        g_joined_date.addWidget(l_joined_date)
+        g_joined_date.addWidget(new_joined_date)
         
          # start date
-        l_start_date = QLabel('<i>End Date:</i>')
+        g_start_date = QVBoxLayout()
+        l_start_date = QLabel('<i>Start Date:</i>')
         new_start_date = QDateEdit()
-        r_layout.addWidget(l_start_date)
-        r_layout.addWidget(new_start_date)
+        g_start_date.addWidget(l_start_date)
+        g_start_date.addWidget(new_start_date)
         
          # end date
+        g_end_date = QVBoxLayout()
         l_end_date = QLabel('<i>End Date:</i>')
         new_end_date = QDateEdit()
-        r_layout.addWidget(l_end_date)
-        r_layout.addWidget(new_end_date)
+        g_end_date.addWidget(l_end_date)
+        g_end_date.addWidget(new_end_date)
+        
+        # joined date + start date + end date
+        l_jd_sd_ed_cont = QHBoxLayout()
+        l_jd_sd_ed_cont.addLayout(g_joined_date, 1)
+        l_jd_sd_ed_cont.addLayout(g_start_date, 1)
+        l_jd_sd_ed_cont.addLayout(g_end_date, 1)
+        l_layout.addLayout(l_jd_sd_ed_cont)
         
          # Pay Percentage
+        g_p_pay = QVBoxLayout()
         l_p_pay = QLabel('<i>Percentage Pay:</i>')
         new_p_pay = QSpinBox()
         new_p_pay.setRange(0, 100)
-        r_layout.addWidget(l_p_pay)
-        r_layout.addWidget(new_p_pay)
+        g_p_pay.addWidget(l_p_pay)
+        g_p_pay.addWidget(new_p_pay)
         
          # Days
+        g_day = QVBoxLayout()
         l_day = QLabel('<i>Day:(Total Days in a month)</i>')
         new_day = QSpinBox()
         new_day.setRange(0, 31)
-        r_layout.addWidget(l_day)
-        r_layout.addWidget(new_day)
+        g_day.addWidget(l_day)
+        g_day.addWidget(new_day)
         
          # Year Of Service
+        g_year_of_service = QVBoxLayout()
         l_year_of_service = QLabel('<i>Year Of Service:</i>')
         new_year_of_service = QSpinBox()
         new_day.setRange(2000, 3000)
-        r_layout.addWidget(l_year_of_service)
-        r_layout.addWidget(new_year_of_service)
+        g_year_of_service.addWidget(l_year_of_service)
+        g_year_of_service.addWidget(new_year_of_service)
         
-         # Year Of Service
+        # Percentage pay + Day + Year Of Service
+        pp_d_yos_cont = QHBoxLayout()
+        pp_d_yos_cont.addLayout(g_p_pay, 3)
+        pp_d_yos_cont.addLayout(g_day, 2)
+        pp_d_yos_cont.addLayout(g_year_of_service, 2)
+        l_layout.addLayout(pp_d_yos_cont)
+        
+         # Comment
+        g_comment = QVBoxLayout()
         l_comment = QLabel('<i>Comment:</i>')
-        new_comment = QLineEdit()
-        r_layout.addWidget(l_comment)
-        r_layout.addWidget(new_comment)
+        new_comment = QTextEdit()
+        g_comment.addWidget(l_comment)
+        g_comment.addWidget(new_comment)
+        l_layout.addLayout(g_comment)
+        
+        l_layout.addWidget(QWidget(), 5)
     
         submit_button = QPushButton('Submit')
-        main_layout.addLayout(l_layout, 1)
-        main_layout.addLayout(r_layout, 1)
+        main_layout.addLayout(l_layout)
+        
         # main_layout.addWidget(submit_button)
      
     def salary_tab(self):
@@ -628,6 +743,7 @@ class Employee(QTabWidget):
         
         submit_button = QPushButton('Add Deduction/Allowance')
         l_layout.addWidget(submit_button)
+        l_layout.addWidget(QWidget(), 5)
         
         # Right Layout
         r_layout = QVBoxLayout()
@@ -684,6 +800,7 @@ class Employee(QTabWidget):
         
         comment_button = QPushButton("Submit Comment")
         r_layout.addWidget(comment_button)
+        r_layout.addWidget(QWidget(), 5)
         
         main_layout.addLayout(l_layout)
         main_layout.addLayout(r_layout)
@@ -744,7 +861,7 @@ class Employee(QTabWidget):
          # To
         cont_to_date_exp = QVBoxLayout()
         l_to_date_exp = QLabel("<i>To Date:</i>")
-        to_date_exp = QDateTimeEdit()
+        to_date_exp = QDateEdit()
         cont_to_date_exp.addWidget(l_to_date_exp)
         cont_to_date_exp.addWidget(to_date_exp)
         
@@ -799,8 +916,44 @@ class Employee(QTabWidget):
         
         # Editable
         edu_layout_r.addWidget(QLabel("<b>Add New Education Qualification</b>"))
+        
+        # Institute
+        g_institute = QVBoxLayout()
+        l_institute = QLabel("<i>Institute:</i>")
+        institute = QLineEdit()
+        g_institute.addWidget(l_institute)
+        g_institute.addWidget(institute)
+        
+         # major
+        g_major = QVBoxLayout()
+        l_major = QLabel("<i>Major / Specialization:</i>")
+        major = QLineEdit()
+        g_major.addWidget(l_major)
+        g_major.addWidget(major)
+        
+        # institute + major
+        i_m_cont = QHBoxLayout()
+        i_m_cont.addLayout(g_institute, 1)
+        i_m_cont.addLayout(g_major, 1)
+        edu_layout_r.addLayout(i_m_cont)
+        
+         # Year
+        g_year = QVBoxLayout()
+        l_year = QLabel("<i>Year:</i>")
+        year = QSpinBox()
+        year.setRange(1000, 4000)
+        g_year.addWidget(l_year)
+        g_year.addWidget(year)
+
+         # gpa
+        g_gpa = QVBoxLayout()
+        l_gpa = QLabel("<i>G.P.A:</i>")
+        gpa = QLineEdit()
+        g_gpa.addWidget(l_gpa)
+        g_gpa.addWidget(gpa)
+        
         # Level
-        cont_level = QVBoxLayout()
+        g_level = QVBoxLayout()
         l_level = QLabel("<i>Level:</i>")
         c_level = QComboBox()
         for item in self.d_values:
@@ -808,45 +961,14 @@ class Employee(QTabWidget):
             if item:
                 c_level.addItem(item)
         c_level.setEditable(True)
-        cont_level.addWidget(l_level)
-        cont_level.addWidget(c_level)
-        edu_layout_r.addLayout(cont_level)
+        g_level.addWidget(l_level)
+        g_level.addWidget(c_level)
         
-        # Institute
-        cont_institute = QVBoxLayout()
-        l_institute = QLabel("<i>Institute:</i>")
-        institute = QLineEdit()
-        cont_institute.addWidget(l_institute)
-        cont_institute.addWidget(institute)
-        edu_layout_r.addLayout(cont_institute)
-        
-         # major
-        cont_major = QVBoxLayout()
-        l_major = QLabel("<i>Major / Specialization:</i>")
-        major = QLineEdit()
-        cont_major.addWidget(l_major)
-        cont_major.addWidget(major)
-        edu_layout_r.addLayout(cont_major)
-        
-         # Year
-        cont_year = QVBoxLayout()
-        l_year = QLabel("<i>Year:</i>")
-        year = QSpinBox()
-        year.setRange(1000, 4000)
-        cont_year.addWidget(l_year)
-        cont_year.addWidget(year)
-
-         # gpa
-        cont_gpa = QVBoxLayout()
-        l_gpa = QLabel("<i>G.P.A:</i>")
-        gpa = QLineEdit()
-        cont_gpa.addWidget(l_gpa)
-        cont_gpa.addWidget(gpa)
-        
-        # Year And GPA
+        # Year + GPA + Level
         cont_year_gpa = QHBoxLayout()
-        cont_year_gpa.addLayout(cont_year, 1)
-        cont_year_gpa.addLayout(cont_gpa, 1)
+        cont_year_gpa.addLayout(g_year, 1)
+        cont_year_gpa.addLayout(g_gpa, 1)
+        cont_year_gpa.addLayout(g_level, 1)
         edu_layout_r.addLayout(cont_year_gpa)
         
          # From
@@ -859,7 +981,7 @@ class Employee(QTabWidget):
          # To
         cont_to_date_edu = QVBoxLayout()
         l_to_date_edu = QLabel("<i>To Date:</i>")
-        to_date_edu = QDateTimeEdit()
+        to_date_edu = QDateEdit()
         cont_to_date_edu.addWidget(l_to_date_edu)
         cont_to_date_edu.addWidget(to_date_edu)
         
@@ -877,6 +999,8 @@ class Employee(QTabWidget):
         edu_layout_r.addLayout(cont_buttons)
         
         edu_layout.setSizeConstraint
+        edu_layout_l.addWidget(QWidget(), 5)
+        edu_layout_r.addWidget(QWidget(), 5)
         # diplay on screen
         edu_layout.addLayout(edu_layout_l)
         edu_layout.addLayout(edu_layout_r)

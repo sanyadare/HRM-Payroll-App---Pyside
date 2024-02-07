@@ -78,6 +78,12 @@ d_nature_of_appointment = [
     }
 ]
 
+d_currencies = [
+    'Naira',
+    'Dollars',
+    'Euro',
+    'Pound'
+]
 
 d_job_designation = [
     {
@@ -156,3 +162,8 @@ d_staff = [
 ]
 
 
+d_account_name = [
+    'First Bank',
+    'GT Bank',
+    'Zenith Bank'
+]
