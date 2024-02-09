@@ -5,7 +5,6 @@ LIGHT_GREEN_MODE_STYLESHEET = """
     QMainWindow {
         background-color: #FFFFFF; /* Window background color */
         color: #000000; /* Text color */
-        font-size: 20px;
     }
     
     QMenuBar {
@@ -115,7 +114,6 @@ LIGHT_BLUE_MODE_STYLESHEET = """
     QMainWindow {
         background-color: #FFFFFF; /* Window background color */
         color: #000000; /* Text color */
-        font-size: 20px;
     }
     
     QMenuBar {
@@ -220,7 +218,6 @@ DARK_MODE_STYLESHEET = """
     QMainWindow {
         background-color: #121212; /* Window background color */
         color: #FFFFFF; /* Text color */
-        font-size: 20px;
     }
   
     QMenuBar {
@@ -331,7 +328,6 @@ DARK_GREEN_MODE_STYLESHEET = """
     QMainWindow {
         background-color: #121212; /* Window background color */
         color: #FFFFFF; /* Text color */
-        font-size: 20px;
     }
   
     QMenuBar {

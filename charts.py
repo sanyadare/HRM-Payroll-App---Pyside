@@ -19,7 +19,7 @@ class BarChart(QWidget):
         ax.set_xlabel(x_label)
         ax.set_ylabel(y_label)
         ax.set_title(title)
-
+        fig.patch.set_facecolor((0.8, 0.8, 0.8, 0.5))
         # Embed the chart in the page
         canvas = FigureCanvas(fig)
         layout.addWidget(canvas)
@@ -43,7 +43,9 @@ class LineGraph(QWidget):
         ax.set_xlabel(x_label)
         ax.set_ylabel(y_label)
         ax.set_title(title)
-
+        fig.patch.set_facecolor((0.8, 0.8, 0.8, 0.5))
+        # fig.patch.set_edgecolor('black')
+        # fig.patch.set_linewidth(2)
         # Embed the chart in the page
         canvas = FigureCanvas(fig)
         layout.addWidget(canvas)
@@ -68,7 +70,9 @@ class PieChart(QWidget):
         ax.set_xlabel(x_label)
         ax.set_ylabel(y_label)
         ax.set_title(title)
-
+        fig.patch.set_facecolor((0.8, 0.8, 0.8, 0.3))
+        # fig.patch.set_edgecolor('black')
+        # fig.patch.set_linewidth(2)
         # Embed the chart in the page
         canvas = FigureCanvas(fig)
         layout.addWidget(canvas)

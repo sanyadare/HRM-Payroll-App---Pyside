@@ -27,23 +27,23 @@ class Dashboard(QWidget):
         
         return chart_layout
     
-    def show_greeting(self, username, date):
+    def show_greeting(self,):
         main_layout = QHBoxLayout()
         
         main_layout.addWidget(QLabel("<b style='font-size:25px;'>DASHBOARD</b>"))
         main_layout.addWidget(QWidget(), 4)
         
         layout = QVBoxLayout()
-        welcome_label = QLabel(f"<b style='font-size:20px;'>Hello, {username.upper()}!</b>")
+        welcome_label = QLabel(f"<b style='font-size:20px;'>Hello, {self.username.upper()}!</b>")
         layout.addWidget(welcome_label)
-        date_label = QLabel(f"Date, {date}")
+        date_label = QLabel(f"Date, {self.date}")
         # layout.addWidget(date_label)
         main_layout.addLayout(layout, 1)
         return main_layout
         
     def init_ui(self):
         main_layout = QVBoxLayout()
-        main_layout.addLayout(self.show_greeting(username=self.username, date=self.date),1)
+        main_layout.addLayout(self.show_greeting(),1)
         main_layout.addLayout(self.show_charts())
         
         main_layout.addWidget(QWidget(), 3)

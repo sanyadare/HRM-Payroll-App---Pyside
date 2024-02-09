@@ -1,3 +1,4 @@
+import sqlite3
 
 months = [
     {
@@ -82,5 +83,29 @@ def convert_month(month_in_int: int):
     return f'{month_in_int} is not a Valid Month'
     # return f'{month_in_int} must be a number'
       
+
+def save_appearance(theme):
+    
+    # check for table
+    # if no table, create table
+    
+    # else set current theme to theme
+    
+    return
+    
+def load_appearance():
+    # check for table
+    
+    # if no table, create table
+        # set default to light-green
+    
+    # else return the current_theme in the table
+    return
+
+def create_appearance_table():
+    
+    return
+
+
 
         

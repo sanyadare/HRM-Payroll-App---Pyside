@@ -1,7 +1,7 @@
 # main_window.py
 from datetime import datetime
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QAction, QIcon
+from PySide6.QtGui import QAction, QIcon, QPixmap, Qt
 from PySide6.QtWidgets import QMainWindow, QSizePolicy, QHBoxLayout, QToolBar,QPushButton,QStatusBar,QLabel, QLineEdit, QVBoxLayout, QWidget, QStackedWidget, QSpinBox, QDialog, QComboBox
 from pages.dashboard import Dashboard
 from pages.admin_actions import AdminActions
@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         
 
     def init_ui(self):
-       
+        
         
         current_datetime = datetime.now()
         # Extract the current month and year
@@ -107,34 +107,39 @@ class MainWindow(QMainWindow):
         self.toolbar.setIconSize(QSize(16, 16))
         self.addToolBar(self.toolbar)
 
-        salary_setup = QAction(icon=QIcon("assets/dashboard.png"), text="Transactional Actions", parent=self)
-        salary_setup.setStatusTip("Send Slips To All Staff, Input Bulk Transaction, Add New User")
-        salary_setup.triggered.connect(self.go_to_admin_actions)
-        self.toolbar.addAction(salary_setup)
+        transac_actions = QAction("Transactional Actions", self)
+        transac_actions.setStatusTip("Send Slips To All Staff, Input Bulk Transaction, Add New User")
+        transac_actions.triggered.connect(self.go_to_admin_actions)
+        transac_actions.setCheckable(True)
+        self.toolbar.addAction(transac_actions)
         
         self.toolbar.addSeparator()
-        salary_setup = QPushButton(text="Salary Setup", icon=QIcon("assets/transaction-history.png"))
+        salary_setup = QAction("Salary Setup", self)
         salary_setup.setStatusTip("Status message for some action")
-        salary_setup.clicked.connect(self.go_to_salary_setup)
-        self.toolbar.addWidget(salary_setup)
+        salary_setup.triggered.connect(self.go_to_salary_setup)
+        salary_setup.setCheckable(True)
+        self.toolbar.addAction(salary_setup)
         
         
 
         # icon = QIcon("assets/logo.png")
         self.toolbar.addSeparator()
         # job_setup = QPushButton("Some other action")
-        job_setup = QPushButton(text="Job Setup", icon=QIcon("assets/portfolio.png"))
-        # job_setup.setStatusTip("Status message for some other action")
-        job_setup.clicked.connect(self.go_to_job_setup)
-        #action2.setCheckable(True)
-        self.toolbar.addWidget(job_setup)
+        job_setup = QAction("Job Setup", self)
+        job_setup.setStatusTip("Job setup")
+        job_setup.triggered.connect(self.go_to_job_setup)
+        job_setup.setCheckable(True)
+        self.toolbar.addAction(job_setup)
 
         self.toolbar.addSeparator()
         # toolbar.addWidget(QPushButton(text="Click here", icon=QIcon("assets/money.png")))
 
 
+    def set_full_window_size(self):
+        self.showMaximized()
+        
     def set_default_window_size(self):
-        self.resize(700, 600)
+        self.resize(400, 400)
 
     def go_to_dashboard(self):
         self.stacked.setCurrentWidget(self.dashboard)
@@ -184,6 +189,7 @@ class MainWindow(QMainWindow):
 
         button = QPushButton("Submit")
 
+        self.month_error_msg = QLabel("")
         # Create layout
         layout = QVBoxLayout(self.dialog)
         layout.addWidget(m_label)
@@ -191,6 +197,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(y_label)
         layout.addWidget(new_year)
       
+        layout.addWidget(self.month_error_msg)
         layout.addWidget(button)
 
         # Connect button clicked signal to a custom slot
@@ -212,13 +219,14 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(f"Date set to: {formatted_date}")
             self.l_date.setText(f"Date is: {formatted_date}")
             # self.dashboard.change_date_label(new_text=formatted_date)
-            # self.dashboard.repaint()
+            self.dashboard.date = self.month
             
-            print(f"Month submitted: {self.month}, Year submitted: {self.year}")
+            # print(f"Month submitted: {self.month}, Year submitted: {self.year}")
+            self.dialog.close()
         else:
+            self.month_error_msg.setText("<p style='color: red;'>Please select a month first</p>")
             print("Please select a month first")
 
-        self.dialog.close()
 
    
     def change_view(self, q):
@@ -244,12 +252,18 @@ class MainWindow(QMainWindow):
     #
     
     def switch_mode(self):
-        if self.current_mode == "light":
-            self.setStyleSheet(DARK_MODE_STYLESHEET)
-            self.current_mode = "dark"
-        else:
-            self.setStyleSheet(LIGHT_GREEN_MODE_STYLESHEET)
-            self.current_mode = "light-green"
+        if self.current_mode == "light-green":
+            self.switch_to_light_green_mode
+        elif self.current_mode == "light-blue": 
+            self.switch_to_light_blue_mode
+        elif self.current_mode == "dark-green": 
+            self.switch_to_dark_green_mode
+        elif self.current_mode == "dark-blue": 
+            self.switch_to_dark_blue_mode
+        elif self.current_mode == "dark": 
+            self.switch_to_dark_mode
+        elif self.current_mode == "default": 
+            self.switch_to_default_mode
 
     def switch_to_light_green_mode(self):
         self.setStyleSheet(LIGHT_GREEN_MODE_STYLESHEET)
@@ -280,12 +294,12 @@ class MainWindow(QMainWindow):
         self.dialog.setStyleSheet(DARK_BLUE_MODE_STYLESHEET)
         self.current_mode = "dark-blue"
         self.personel_info_mgt.setMode("dark-blue")
-    
-    
-    
+     
     def switch_to_default_mode(self):
         self.setStyleSheet('default')
         self.current_mode = "default"
+        self.current_mode = "default"
+        self.personel_info_mgt.setMode("default")
     
     def set_default_window_size(self):
         # Set the default window size to 1200x600
@@ -296,29 +310,33 @@ class MainWindow(QMainWindow):
         
     
     def login_page(self):
-        self.set_default_window_size()
+        self.switch_mode()
+        self.resize(800, 400)
         login_layout = QHBoxLayout()
         layout = QVBoxLayout()
 
-        self.trial_count = 0
+        self.trial_count = 5
         
         # Username input
         username_label = QLabel("Username:")
         self.username_input = QLineEdit()
-        self.username_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.username_input.textChanged.connect(self.check_text)
+        # self.username_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
         # Password input
         password_label = QLabel("Password:")
         self.password_input = QLineEdit()
-        self.password_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.password_input.textChanged.connect(self.check_text)
+        # self.password_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.password_input.setEchoMode(QLineEdit.Password)
 
         # Login button
         self.login_button = QPushButton("Login")
+        self.login_button.setEnabled(False)
         self.login_button.clicked.connect(self._check_login)
         self.error_message = QLabel("")
 
-        layout.addWidget(QLabel("<b style='font-size: 20px'>Login</b>"))
+        # layout.addWidget(QLabel("<b style='font-size: 20px'>Login</b>"))
         layout.addWidget(username_label)
         layout.addWidget(self.username_input)
         layout.addWidget(password_label)
@@ -333,9 +351,22 @@ class MainWindow(QMainWindow):
         # r_layout.addWidget(QWidget(), 1)
         
         l_layout = QVBoxLayout()
-        logo = QIcon("assets/logo.png")
-        l_layout.addWidget(QLabel("<b style='font-size: 30px'>AKYERIT SOLUTIONS</b>"))
-        l_layout.addWidget(QLabel())
+        logo = QPixmap("assets/logo.png")
+        logo = logo.scaled(50, 50)
+        landing_logo = QLabel()
+        landing_logo.setPixmap(logo)
+        landing_logo.setAlignment(Qt.AlignCenter)
+        landing_copy = QLabel("""<p style="font-size: 14px;" align='center'; >Welcome to Akyerite Payslip HRM Desktop Application, <br>
+                              where powerful management tools meet seamless efficiency. <br> 
+                              Simplify your business operations with our intuitive <br> database management system, 
+                              enabling easy <br> organization and access to your company's data. <br>
+                              From payroll processing to employee management, <br> our comprehensive features streamline your workflow, <br> saving you time and hassle.</p>""")
+        l_layout.addWidget(QWidget(), 5)
+        l_layout.addWidget(landing_logo)
+        l_layout.addWidget(QLabel("<p style='font-size: 30px; font-weight: bold;' align='center';>PAYSLIP HRM</p>"), 1)
+        l_layout.addWidget(landing_copy, 1)
+        l_layout.addWidget(QLabel("<p style='font-style: italic; color: gray;' align='center'>All Rights Reserved By Akyerite Solutions</p>"))
+        l_layout.addWidget(QWidget(), 5)
         
         
         login_layout.addLayout(l_layout, 1)
@@ -344,30 +375,38 @@ class MainWindow(QMainWindow):
         self.login_p.setLayout(login_layout)
         self.setCentralWidget(self.login_p)
         
-    
+    def check_text(self):
+        username = self.username_input.text().strip()
+        password = self.password_input.text().strip()
+        
+        if username and password:
+            self.login_button.setEnabled(True)
+        else:
+            self.login_button.setEnabled(False)
 
     def _check_login(self):
         # Simple login check (replace with your authentication logic)
-        
-        def refresh():
-            self.error_message.setText("")
         
         username = self.username_input.text()
         password = self.password_input.text()
 
         if username == "admin" and password == "admin":
             self.login_p.close()
-            self.trial_count = 0
+            self.trial_count = 5
+            self.set_full_window_size()
             self.init_ui()
         
+        elif self.trial_count == 1:
+            self.close()
         else:
-            self.trial_count = self.trial_count + 1
-            self.error_message.setText(f"<p style='color: red'>InValid Credentials, Try Again {self.trial_count}<p>")
+            self.trial_count = self.trial_count - 1
+            self.error_message.setText(f"<p style='color: red'>InValid Credentials, You have {self.trial_count} attempts left<p>")
 
     
     def _log_out(self):
         self.stacked.close()
         self.menu_bar.close()
         self.toolbar.close()
+        self.resize(800, 400)
         self.login_page()
       

@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QTextEdit,QSpinBox, QComboBox,QGroupBox,QRadioButton, QDateEdit, QSizePolicy, QTabWidget, QLabel, QWidget,QGridLayout, QFormLayout, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
+from PySide6.QtWidgets import QTextEdit, QSpinBox, QComboBox, QGroupBox, QRadioButton, QDateEdit, QSizePolicy, QTabWidget, QLabel, QWidget,QGridLayout, QFormLayout, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QPushButton, QLineEdit
 from PySide6.QtGui import QIntValidator
 from dummy import d_bank_names, d_countries, d_job_titles, d_nature_of_appointment, d_employment_status, d_job_designation, d_values
 
@@ -57,7 +57,7 @@ class Employee(QTabWidget):
 
     def personal_details_tab(self):
         main_layout = QHBoxLayout(self.tab_personal_details)
-        
+        # self.editable = False
         # Form elements for edit
         full_name_layout = QVBoxLayout()
         
@@ -65,7 +65,7 @@ class Employee(QTabWidget):
         g_surname = QVBoxLayout()
         l_surname = QLabel('<i>Surname:</i>')
         new_surname = QLineEdit()
-        # new_surname.setEnabled(self.edit)
+        # new_surname.setEnabled(self.editable)
         new_surname.setText('current surname')
         new_surname.setPlaceholderText('')
         g_surname.addWidget(l_surname)
@@ -193,18 +193,20 @@ class Employee(QTabWidget):
         
         full_name_layout.addWidget(QWidget(), 5)
         
-        if self.edit:
-            submit_button = QPushButton('Submit')
             
-            main_layout.addLayout(full_name_layout )
-            main_layout.addLayout(employee_layout )
-            main_layout.addWidget(submit_button)
-        else:
-            edit_button = QPushButton('Edit')
-            edit_button.clicked.connect(self.set_Edit)
-            main_layout.addLayout(full_name_layout )
-            main_layout.addLayout(employee_layout )
-            main_layout.addWidget(edit_button)
+        
+    # if self.editable:
+        submit_button = QPushButton('Submit')
+        
+        main_layout.addLayout(full_name_layout )
+        main_layout.addLayout(employee_layout )
+        main_layout.addWidget(submit_button)
+        # else:
+        #     edit_button = QPushButton('Edit')
+        #     edit_button.clicked.connect(toggle_editable)
+        #     main_layout.addLayout(full_name_layout )
+        #     main_layout.addLayout(employee_layout )
+        #     main_layout.addWidget(edit_button)
             
         
        
@@ -642,7 +644,7 @@ class Employee(QTabWidget):
         submit_button = QPushButton('Submit')
         main_layout.addLayout(l_layout)
         
-        # main_layout.addWidget(submit_button)
+        main_layout.addWidget(submit_button)
      
     def salary_tab(self):
         main_layout = QHBoxLayout(self.tab_salary)
